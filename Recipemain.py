@@ -55,10 +55,6 @@ def add_recipe(recipe_book):
     recipe = Recipe(title, ingredients, instructions)
     recipe_book.add_recipe(recipe)
     print(f"\n{title} has been added to the recipe book.")
-    manager_choice = input("Would you like to edit or delete an existing recipe? (y/n): ")
-    if manager_choice == "y":
-        manager = Manager(recipe_book)
-        manager.manage_recipe()
 
 
 def get_recommendation(recipe_book):
