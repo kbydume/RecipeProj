@@ -84,7 +84,7 @@ def save_to_csv(recipe_book):
     Args:
         recipe_book (RecipeBook): The recipe book containing the recipes to save.
     """
-    with open("recipez.csv", mode="w", newline="") as file:
+    with open("recipe.csv", mode="w", newline="") as file:
         writer = csv.writer(file)
         for recipe in recipe_book.get_all_recipes():
             writer.writerow([recipe.get_title(), ",".join(recipe.get_ingredients()), recipe.get_instructions()])
@@ -98,7 +98,7 @@ def load_from_csv(recipe_book):
         recipe_book (RecipeBook): The recipe book to add the loaded recipes to.
     """
     try:
-        with open("recipez.csv", mode="r") as file:
+        with open("recipe.csv", mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
                 title, ingredients, instructions = row
