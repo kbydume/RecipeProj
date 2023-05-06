@@ -84,8 +84,9 @@ def get_recommendation():
     get_style=get_style.lower()
     # print("\nHere's a recipe you might like:")
     recipe=get_recommendations(get_meat,get_style)
-    print("\nHere's a recipe you might like:")
-    print(recipe[0]+"\n"+recipe[1])
+    if len(recipe) !=0:
+        print("\nHere's a recipe you might like:")
+        print(recipe[0]+"\n"+recipe[1])
 
 
 def save_to_csv(recipe_book):
