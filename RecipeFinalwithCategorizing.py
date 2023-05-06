@@ -46,11 +46,11 @@ def main():
             break
         else:
             print("Invalid choice. Please try again.")
-    file_name = 'recipe.csv'
+    # file_name = 'recipe.csv'
 
-    categorizer = Categorize(file_name)
-    categorizer.categorize_recipes()
-    categorized_recipes = categorizer.get_categories()
+    # categorizer = Categorize(file_name)
+    # categorizer.categorize_recipes()
+    # categorized_recipes = categorizer.get_categories()
 
 def add_recipe(recipe_book):
     """
@@ -78,9 +78,12 @@ def get_recommendation():
     Args:
         recipe_book (RecipeBook): The recipe book to get a recommendation from.
     """
-    get_meat=input("What kind of meat would you like? \n")
+    get_meat=input("What kind of food would you like? \n")
+    get_style=input("What kind of cooking style you want?\n")
     get_meat=get_meat.lower()
-    recipe=get_recommendations(get_meat)
+    get_style=get_style.lower()
+    # print("\nHere's a recipe you might like:")
+    recipe=get_recommendations(get_meat,get_style)
     print("\nHere's a recipe you might like:")
     print(recipe[0]+"\n"+recipe[1])
 
