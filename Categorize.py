@@ -35,9 +35,9 @@ class Categorize:
 
     def categorize_recipes(self):
         for recipe in self.recipes:
-            name = recipe[1]
-            ingredients = recipe[2]
-            instructions = recipe[3]
+            name = recipe[0]
+            ingredients = recipe[1]
+            instructions = recipe[2]
 
             found_meat = False
             found_style = False
@@ -90,8 +90,6 @@ class Categorize:
         random_dishes = random.sample(combined_dishes, num_dishes)
         return random_dishes
 
-# ...
-
 def get_recommendations(meat, style):
     file_name = 'recipe.csv'
     categorizer = Categorize(file_name)
@@ -99,17 +97,3 @@ def get_recommendations(meat, style):
     # recommendations = get_recommendations(meat, style)
     random_dishes = categorizer.get_random_dishes_by_category(meat, style, num_dishes=2)
     return random_dishes
-
-# if __name__ == "__main__":
-#     meat = 'chicken'
-#     style = 'grilled'
-
-#     file_name = 'recipe.csv'
-
-#     categorizer = Categorize(file_name)
-#     categorizer.categorize_recipes()
-
-#     recommendations = get_recommendations(meat, style)
-#     print(f"Recommended {meat} {style} dishes:")
-#     for dish in recommendations:
-#         print(f"- {dish}")
