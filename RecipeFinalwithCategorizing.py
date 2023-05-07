@@ -78,15 +78,18 @@ def get_recommendation():
     Args:
         recipe_book (RecipeBook): The recipe book to get a recommendation from.
     """
-    get_meat=input("What kind of food would you like? \n")
-    get_style=input("What kind of cooking style you want?\n")
+    get_meat = input("What kind of food would you like? These are the options: "
+                     "Beef, Pork, Chicken, Fish, Lamb, or Other\n---> ")
+    get_style = input("What is your preferred cooking style? "
+                      "Grilled, Fried, Baked, Roasted, Stewed, Boiled,"
+                      "Steamed, Stir-Fried, or Other\n--->  ")
+
     get_meat=get_meat.lower()
     get_style=get_style.lower()
     # print("\nHere's a recipe you might like:")
     recipe=get_recommendations(get_meat,get_style)
-    if len(recipe) !=0:
-        print("\nHere's a recipe you might like:")
-        print(recipe[0]+"\n"+recipe[1])
+    print("\nHere's a recipe you might like:")
+    print(recipe[0]+"\n"+recipe[1])
 
 
 def save_to_csv(recipe_book):
@@ -96,7 +99,7 @@ def save_to_csv(recipe_book):
     Args:
         recipe_book (RecipeBook): The recipe book containing the recipes to save.
     """
-    with open("recipez.csv", mode="w", newline="") as file:
+    with open("recipe.csv", mode="w", newline="") as file:
         writer = csv.writer(file)
         for recipe in recipe_book.get_all_recipes():
             writer.writerow([recipe.get_title(), ",".join(recipe.get_ingredients()), recipe.get_instructions()])
@@ -110,7 +113,7 @@ def load_from_csv(recipe_book):
         recipe_book (RecipeBook): The recipe book to add the loaded recipes to.
     """
     try:
-        with open("recipez.csv", mode="r") as file:
+        with open("recipe.csv", mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
                 title, ingredients, instructions = row
