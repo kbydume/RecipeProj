@@ -1,0 +1,35 @@
+# RecipeProj
+INST 326 - Final Project 
+
+1. Our INST 326 Final Project is a Recipe program that has the ability to add, delete, edit, and offer 
+suggestions of recipes based on the users preferred meat, cooking style, and even a general ingredient you might like to use. This project utlizes a CSV file as a database with over 1,000 recipes in order to give the user a randomized suggestion of a food they may like.
+
+2. This project can run from the terminal or any Python code runner you may have. To run this code from the terminal be sure to first clone this repo and put it into your desired directory. After that, open up your terminal and navigate to where you have placed this repo then naviagate to this folder by typing "cd RecipeProj" and then type in "python3 RecipeFinal.py" and then the code will start. 
+
+3. After you have started to run the program from the command line, the program will start and prompt you with this: 
+  "Welcome to the recipe program!
+  What would you like to do?
+  1. Add a new recipe
+  2. Get a recipe recommendation
+  3. Get a specific recommendation
+  4. Delete a recipe
+  5. Edit a recipe
+  6. Quit
+  Enter your choice (1-6):"
+  
+  - From then on you can make a choice about what function you would like to do, the program will give you specififc instructions on how to 
+  add a recipe to the csv, delete a recipe and so on... 
+  - After every fucntion that you may do, the program will provide you with a "success message" that indicates that whatever function you 
+  would have liked to have done has been completed. For example, if you chose to add a recipe to the csv, after you have finished inputting 
+  all of the needed information it will say "{title of recipe} has been added." 
+  - This is meant to ensure that your actions have gotten through the csv and then you can continue to use the program as you please. 
+  
+                                                                Annotated Biblography 
+                                                                
+ Goel, Sakshi. “Food Ingredients and Recipes Dataset with Images.” Kaggle, 19 Feb. 2021, www.kaggle.com/datasets/pes12017000148/food-                    ingredients-and-recipe-dataset-with-images. 
+
+    We utilized this source to retrieve the dataset of the recipes that we used in our program. This website contained a csv file with over 1,000 recipes that we then used as our database to our recipe program. We decided to use this file because it offered a lot of variation in the recipes that we wanted to use without having to input the data by ourselfs. 
+ 
+N/A. “Pandas - Fixing Wrong Data.” Pandas - Cleaning Data, www.w3schools.com/python/pandas/pandas_cleaning_wrong_data.asp. Accessed 8 May 2023. 
+N/A. “Pandas Read CSV.” Pandas Read CSV, www.w3schools.com/python/pandas/pandas_csv.asp#gsc.tab=0. Accessed 8 May 2023. 
+    We utlized both of these sources to get information how to work with CSV file and how to remove and clean data from it. W3 schools was helpful in identifying which syntax we needed to use in order to complete this project. Throughout this project we utlized w3schools in order to: fix errors, syntax and find out how to work with csv files efficiently. 
