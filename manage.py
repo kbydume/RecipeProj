@@ -1,3 +1,5 @@
+from recipe import Recipe
+
 class Manager:
     """This class manages the recipe book which allows for editing and deleting.
     Attributes:
@@ -19,17 +21,16 @@ class Manager:
             recipe_title(str): The title of the recipe thats deleted."""
         recipe = self.recipe_book.get_recipe(recipe_title)
         if recipe:
-            self.recipe_book.remove_recipe(recipe)
+            self.recipe_book.remove_recipe(recipe_title)
             print(f"{recipe_title} has been deleted from the recipe book.")
         else:
             print(f"{recipe_title} not found in recipe book.")
 
-    def get_recipe_input(self):
+    def get_recipe_input(self,title):
         """This method prompts user input for the new recipe information.
         Returns:
             A recipe object with the updated information, none if otherwise. 
             """
-        title = input("Enter the title of the recipe to edit: ")
         recipe = self.recipe_book.get_recipe(title)
         if not recipe:
             print(f"{title} not found in recipe book.")
@@ -48,6 +49,7 @@ class Manager:
         new_recipe = Recipe(title, ingredients, instructions)
         return new_recipe
 
+
     def print_recipe_output(self, recipe):
         """This method prints the updated recipe information.
         Args:
@@ -57,11 +59,18 @@ class Manager:
         print(f"Ingredients: {', '.join(recipe.get_ingredients())}")
         print(f"Instructions: {recipe.get_instructions()}")
 
-    def edit_recipe(self):
+    def edit_recipe(self,title):
         """This method edits the recipe book by replacing the new Recipe object
         with the updated information."""
-        new_recipe = self.get_recipe_input()
-        if new_recipe:
-            self.recipe_book.remove_recipe(new_recipe)
-            self.recipe_book.add_recipe(new_recipe)
-            self.print_recipe_output(new_recipe)
+        recipe = self.recipe_book.get_recipe(title)
+        if not recipe:
+            print(f"{title} not found in recipe book.")
+            return
+
+        new_recipe = self.get_recipe_input(title)
+        if not new_recipe:
+            return
+        self.recipe_book.remove_recipe(title)
+        self.recipe_book.add_recipe(new_recipe)
+        print(f"{title} successfully updated.")
+
