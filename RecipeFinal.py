@@ -68,10 +68,6 @@ def add_recipe(recipe_book):
     recipe = Recipe(title, ingredients, instructions)
     recipe_book.add_recipe(recipe)
     print(f"\n{title} has been added to the recipe book.")
-    manager_choice = input("Would you like to edit or delete an existing recipe? (y/n): ")
-    if manager_choice == "y":
-        manager = Manager(recipe_book)
-        manager.manage_recipe()
 
 def get_recommendation():
     """
@@ -112,10 +108,11 @@ def get_recommendation():
           
 def specific_recommendations():
     r = Recommendation('recipe.csv')
-
+    print("Provide any ingredient and a recipe that includes that food "
+          "will be provided!\n")
     keyword = input('What would you like to eat: ')
     recommendations = r.get_recommendations(keyword)
-    print(f"Here are some '{keyword}' options: ")
+    print(f"Here are some '{keyword}' option(s): ")
     for r in recommendations:
         print(r)
 
@@ -156,6 +153,4 @@ def load_from_csv(recipe_book):
 
 if __name__ == "__main__":
     main()
-
-
 
