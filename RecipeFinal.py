@@ -101,10 +101,15 @@ def get_recommendation():
         break
 
     recipe = get_recommendations(get_meat, get_style)
-    print("\nHere's a recipe you might like:")
-    print(recipe[0] + "\n" + recipe[1])
-
-
+    if len(recipe) > 0:
+        print("\nHere's a recipe you might like:")
+        print(recipe[0])
+        if len(recipe) > 1:
+            print("\nHere's another recipe you might like:")
+            print(recipe[1])
+    else:
+        print("\nSorry, there are no recipes that follow those preferences.")
+          
 def specific_recommendations():
     r = Recommendation('recipe.csv')
 
@@ -151,5 +156,6 @@ def load_from_csv(recipe_book):
 
 if __name__ == "__main__":
     main()
+
 
 
