@@ -4,7 +4,7 @@ from recipe import Recipe
 from recipebook import RecipeBook
 from manage import Manager
 from Categorize import get_recommendations, Categorize
-
+from recommendation import Recommendation
 
 def main():
     """
@@ -14,19 +14,21 @@ def main():
     load_from_csv(recipe_book)
     manager = Manager(recipe_book)
 
+
     while True:
         print("\nWelcome to the recipe program!")
         print("What would you like to do?")
         print("1. Add a new recipe")
         print("2. Get a recipe recommendation")
-        print("3. Delete a recipe")
-        print("4. Edit a recipe")
-        print("5. Quit")
+        print("3. Get a specific recommendation")
+        print("4. Delete a recipe")
+        print("5. Edit a recipe")
+        print("6. Quit")
 
         try:
-            choice = int(input("Enter your choice (1-5): "))
+            choice = int(input("Enter your choice (1-6): "))
         except ValueError:
-            print("Invalid choice. Please enter a number between 1-5.")
+            print("Invalid choice. Please enter a number between 1-6.")
             continue
 
         if choice == 1:
@@ -35,18 +37,20 @@ def main():
         elif choice == 2:
             get_recommendation()
         elif choice == 3:
+            specific_recommendations()
+        elif choice == 4:
             recipe_title = input("Enter the title of the recipe you want to delete: ")
             manager.delete_recipe(recipe_title)
             save_to_csv(recipe_book)
-        elif choice == 4:
+        elif choice == 5:
             recipe_title = input("Enter the title of the recipe you want to edit: ")
             manager.edit_recipe(recipe_title)
             save_to_csv(recipe_book)
-        elif choice == 5:
+        elif choice == 6:
             break
         else:
             print("Invalid choice. Please try again.")
-    # file_name = 'recipe.csv'
+            # file_name = 'recipe.csv'
 
     # categorizer = Categorize(file_name)
     # categorizer.categorize_recipes()
@@ -99,6 +103,16 @@ def get_recommendation():
     recipe = get_recommendations(get_meat, get_style)
     print("\nHere's a recipe you might like:")
     print(recipe[0] + "\n" + recipe[1])
+
+
+def specific_recommendations():
+    r = Recommendation('recipe.csv')
+
+    keyword = input('What would you like to eat: ')
+    recommendations = r.get_recommendations(keyword)
+    print(f"Here are some '{keyword}' options: ")
+    for r in recommendations:
+        print(r)
 
 
 def save_to_csv(recipe_book):

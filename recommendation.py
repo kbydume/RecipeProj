@@ -22,18 +22,3 @@ class Recommendation:
             return [f"- {title}" for title in ingredient_titles]
 
 
-r = Recommendation('RECIPE.csv')
-
-while True:
-    action = input(
-        "Would you like a specific recommendation?(yes, or 'q' to exit): ")
-    if action == 'yes':
-        keyword = input('What would you like to eat: ')
-        recommendations = r.get_recommendations(keyword)
-        print(f"Here are some '{keyword}' options: ")
-        for r in recommendations:
-            print(r)
-    elif action == 'q':
-        break
-    else:
-        print("Sorry, I don't understand that command. Please try again.")
