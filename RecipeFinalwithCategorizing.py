@@ -1,8 +1,3 @@
-#Notes for meeting
-# Documentation
-# Error Handling
-# Unit Tests
-# Docstrings 
 import csv
 import random
 from recipe import Recipe
@@ -28,21 +23,26 @@ def main():
         print("4. Edit a recipe")
         print("5. Quit")
 
-        choice = input("Enter your choice (1-5): ")
-        if choice == "1":
+        try:
+            choice = int(input("Enter your choice (1-5): "))
+        except ValueError:
+            print("Invalid choice. Please enter a number between 1-5.")
+            continue
+
+        if choice == 1:
             add_recipe(recipe_book)
             save_to_csv(recipe_book)
-        elif choice == "2":
+        elif choice == 2:
             get_recommendation()
-        elif choice == "3":
+        elif choice == 3:
             recipe_title = input("Enter the title of the recipe you want to delete: ")
             manager.delete_recipe(recipe_title)
             save_to_csv(recipe_book)
-        elif choice == "4":
+        elif choice == 4:
             recipe_title = input("Enter the title of the recipe you want to edit: ")
             manager.edit_recipe(recipe_title)
             save_to_csv(recipe_book)
-        elif choice == "5":
+        elif choice == 5:
             break
         else:
             print("Invalid choice. Please try again.")
@@ -51,7 +51,6 @@ def main():
     # categorizer = Categorize(file_name)
     # categorizer.categorize_recipes()
     # categorized_recipes = categorizer.get_categories()
-
 def add_recipe(recipe_book):
     """
     Adds a new recipe to the recipe book.
@@ -70,7 +69,6 @@ def add_recipe(recipe_book):
         manager = Manager(recipe_book)
         manager.manage_recipe()
 
-
 def get_recommendation():
     """
     Prints a randomly selected recipe from the recipe book.
@@ -78,18 +76,29 @@ def get_recommendation():
     Args:
         recipe_book (RecipeBook): The recipe book to get a recommendation from.
     """
-    get_meat = input("What kind of food would you like? These are the options: "
-                     "Beef, Pork, Chicken, Fish, Lamb, or Other\n---> ")
-    get_style = input("What is your preferred cooking style? "
-                      "Grilled, Fried, Baked, Roasted, Stewed, Boiled,"
-                      "Steamed, Stir-Fried, or Other\n--->  ")
+    categorizer = Categorize('recipe.csv')
+    meat_options = list(categorizer.get_meat_categories().keys())
+    style_options = list(categorizer.get_cooking_styles().keys())
 
-    get_meat=get_meat.lower()
-    get_style=get_style.lower()
-    # print("\nHere's a recipe you might like:")
-    recipe=get_recommendations(get_meat,get_style)
+    while True:
+        get_meat = input("What kind of food would you like? These are the options: "
+                         f"{', '.join(meat_options).capitalize()}\n---> ").lower()
+        if get_meat not in meat_options:
+            print("Invalid option. Please choose from the available options.")
+            continue
+        break
+
+    while True:
+        get_style = input("What is your preferred cooking style? "
+                          f"{', '.join(style_options).capitalize()}\n--->  ").lower()
+        if get_style not in style_options:
+            print("Invalid option. Please choose from the available options.")
+            continue
+        break
+
+    recipe = get_recommendations(get_meat, get_style)
     print("\nHere's a recipe you might like:")
-    print(recipe[0]+"\n"+recipe[1])
+    print(recipe[0] + "\n" + recipe[1])
 
 
 def save_to_csv(recipe_book):
@@ -99,11 +108,13 @@ def save_to_csv(recipe_book):
     Args:
         recipe_book (RecipeBook): The recipe book containing the recipes to save.
     """
-    with open("recipe.csv", mode="w", newline="") as file:
-        writer = csv.writer(file)
-        for recipe in recipe_book.get_all_recipes():
-            writer.writerow([recipe.get_title(), ",".join(recipe.get_ingredients()), recipe.get_instructions()])
-
+    try:
+        with open("recipe.csv", mode="w", newline="") as file:
+            writer = csv.writer(file)
+            for recipe in recipe_book.get_all_recipes():
+                writer.writerow([recipe.get_title(), ",".join(recipe.get_ingredients()), recipe.get_instructions()])
+    except IOError as e:
+        print(f"Error saving to CSV file: {e}")
 
 def load_from_csv(recipe_book):
     """
@@ -120,8 +131,11 @@ def load_from_csv(recipe_book):
                 recipe = Recipe(title, ingredients.split(","), instructions)
                 recipe_book.add_recipe(recipe)
     except FileNotFoundError:
-        pass
-
+        print("recipe.csv not found. Starting with an empty recipe book.")
+    except IOError as e:
+        print(f"Error loading from CSV file: {e}")
 
 if __name__ == "__main__":
     main()
+
+
