@@ -41,7 +41,11 @@ class RecipeBook:
         """This method removes a recipe from the recipe book.
         Args:
             recipe(Recipe): a recipe object that's gonna be removed."""
-        self.recipes.remove(recipe)
+        found_recipe = self.get_recipe(recipe)
+        if found_recipe:
+            self.recipes.remove(found_recipe)
+        else:
+            return
 
     def __str__(self):
         """This method returns a string reprsentation of the recipe book.
