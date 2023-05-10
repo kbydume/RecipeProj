@@ -20,7 +20,7 @@ def main():
         print("What would you like to do?")
         print("1. Add a new recipe")
         print("2. Get a recipe recommendation")
-        print("3. Get a specific recommendation")
+        print("3. Get a general recommendation (based on one ingredient)")
         print("4. Delete a recipe")
         print("5. Edit a recipe")
         print("6. Quit")
@@ -153,4 +153,3 @@ def load_from_csv(recipe_book):
 
 if __name__ == "__main__":
     main()
-
