@@ -40,7 +40,7 @@ class Manager:
         if ingredients:
             ingredients = ingredients.split(",")
         else:
-            ingredients = recipe.get_ingredients()
+            ingredients = []
 
         instructions = input(f"Enter new instructions for {title} (leave blank to keep current instructions): ")
         if not instructions:
