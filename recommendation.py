@@ -26,37 +26,8 @@ class Recommendation:
         Returns:
             list: A list of food recommendations.
         """
-        
-import pandas as pd
-
-
-
-class Recommendation:
-
-    def __init__(self, filepath):
-        
-        """
-        Initialize the Recommendation object.
-
-        Args:
-            filepath (str): The path to the CSV file containing recipe data.
-        """
-        
-        self.df = pd.read_csv(filepath)
-
-    def g_recommendationz(self, keyword):
-        
-        """
-        Get food recommendations based on a keyword.
-
-        Args:
-            keyword (str): The keyword to search for in the Ingredients column.
-
-        Returns:
-            list: A list of food recommendations.
-        """
         keyword = ''.join(filter(str.isalpha, keyword))
-        
+
         # Find the top 5 items in the Ingredients column that contain the keyword
         ingredient_matches = self.df[self.df['Ingredients'].str.contains(rf"\b{keyword}\b", na=False, case=False)]
         if ingredient_matches.empty:
@@ -69,5 +40,3 @@ class Recommendation:
 
             # Return the food recommendations
             return [f"- {title}" for title in ingredient_titles]
-
-
