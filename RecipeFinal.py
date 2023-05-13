@@ -50,11 +50,7 @@ def main():
             break
         else:
             print("Invalid choice. Please try again.")
-            # file_name = 'recipe.csv'
 
-    # categorizer = Categorize(file_name)
-    # categorizer.categorize_recipes()
-    # categorized_recipes = categorizer.get_categories()
 def add_recipe(recipe_book):
     """
     Adds a new recipe to the recipe book.
