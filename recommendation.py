@@ -5,9 +5,28 @@ import pandas as pd
 class Recommendation:
 
     def __init__(self, filepath):
+        
+        """
+        Initialize the Recommendation object.
+
+        Args:
+            filepath (str): The path to the CSV file containing recipe data.
+        """
+        
         self.df = pd.read_csv(filepath)
 
     def get_recommendations(self, keyword):
+        
+        """
+        Get food recommendations based on a keyword.
+
+        Args:
+            keyword (str): The keyword to search for in the Ingredients column.
+
+        Returns:
+            list: A list of food recommendations.
+        """
+        
         # Find the top 5 items in the Ingredients column that contain the keyword
         ingredient_matches = self.df[self.df['Ingredients'].str.contains(keyword)]
         if len(ingredient_matches) == 0:
