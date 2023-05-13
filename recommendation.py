@@ -15,7 +15,7 @@ class Recommendation:
         
         self.df = pd.read_csv(filepath)
 
-    def get_recommendations(self, keyword):
+    def g_recommendationz(self, keyword):
         
         """
         Get food recommendations based on a keyword.
