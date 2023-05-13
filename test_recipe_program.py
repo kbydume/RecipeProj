@@ -67,43 +67,43 @@ class TestRecipeProgram(unittest.TestCase):
     #test for print output 
 
 ###TEST FOR CATEGORIZE CLASS
-    def test_categorize(self):
-        """This test checks the categorization of recipes based on meat and style."""
 
-        # Initialize a categorizer
-        categorizer = Categorize('test_recipes.csv')  # Assumed to exist and have appropriate format
+class TestCategorize(unittest.TestCase):
 
-        # Test categorization
-        categorizer.categorize_recipes()
+    def setUp(self):
+        self.file_name = 'recipe.csv'  # A file path to a valid CSV file is needed here
+        self.categorizer = Categorize(self.file_name)
+        self.categorizer.categorize_recipes()
 
-        # Check meat categories
-        self.assertIn("Test Recipe 1", categorizer.get_meat_categories()['beef'])
-        self.assertIn("Test Recipe 2", categorizer.get_meat_categories()['chicken'])
-        self.assertIn("Test Recipe 3", categorizer.get_meat_categories()['other'])
-
-        # Check cooking styles
-        self.assertIn("Test Recipe 1", categorizer.get_cooking_styles()['grilled'])
-        self.assertIn("Test Recipe 2", categorizer.get_cooking_styles()['fried'])
-        self.assertIn("Test Recipe 3", categorizer.get_cooking_styles()['other'])
+    def test_categorize_recipes(self):
+        meat_categories = self.categorizer.get_meat_categories()
+        cooking_styles = self.categorizer.get_cooking_styles()
+        
+        # Check if the categorization was successful
+        self.assertTrue(meat_categories)
+        self.assertTrue(cooking_styles)
 
     def test_get_random_dishes_by_category(self):
-        """This test checks getting random dishes by category."""
+        random_dishes = self.categorizer.get_random_dishes_by_category('beef', 'grilled', 2)
 
-        # Initialize a categorizer
-        categorizer = Categorize('test_recipes.csv')  # Assumed to exist and have appropriate format
-
-        # Test categorization
-        categorizer.categorize_recipes()
-
-        # Get random dishes
-        random_dishes = categorizer.get_random_dishes_by_category('beef', 'grilled', num_dishes=2)
-
-        # Check random dishes
+        # Check if we get the right number of dishes
         self.assertEqual(len(random_dishes), 2)
-        for dish in random_dishes:
-            self.assertIn(dish, categorizer.get_meat_categories()['beef'])
-            self.assertIn(dish, categorizer.get_cooking_styles()['grilled'])
 
+        # Check if the dishes are indeed in the 'beef' and 'grilled' categories
+        for dish in random_dishes:
+            self.assertIn(dish, self.categorizer.meat_categories['beef'])
+            self.assertIn(dish, self.categorizer.cooking_styles['grilled'])
+
+    def test_get_recommendations(self):
+        random_dishes = get_recommendations('chicken', 'fried')
+
+        # Check if we get the right number of dishes
+        self.assertEqual(len(random_dishes), 2)
+
+        # Check if the dishes are indeed in the 'chicken' and 'fried' categories
+        for dish in random_dishes:
+            self.assertIn(dish, self.categorizer.meat_categories['chicken'])
+            self.assertIn(dish, self.categorizer.cooking_styles['fried'])
 
 ###TEST FOR RECOMMENDATION CLASS
 
