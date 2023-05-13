@@ -111,7 +111,7 @@ def specific_recommendations():
     print("Provide any ingredient and a recipe that includes that food "
           "will be provided!\n")
     keyword = input('What would you like to eat: ')
-    recommendations = r.get_recommendations(keyword)
+    recommendations = r.g_recommendationz(keyword)
     print(f"Here are some '{keyword}' option(s): ")
     for r in recommendations:
         print(r)
