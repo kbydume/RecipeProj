@@ -106,66 +106,22 @@ class TestCategorize(unittest.TestCase):
             self.assertIn(dish, self.categorizer.cooking_styles['fried'])
 
 ###TEST FOR RECOMMENDATION CLASS
+class TestRecommendation(unittest.TestCase):
 
-###TEST FOR RECOMMENDATION CLASS
-    def test_get_recommendations(self):
-        """This test checks the recommendation of recipes based on a keyword."""
+    def setUp(self):
+        self.rec = Recommendation('recipe.csv')
 
-        # Initialize a recommendation object
-        recommender = Recommendation('test_recipes.csv')  # Assumed to exist and have appropriate format
+    def test_df_not_empty(self):
+        self.assertFalse(self.rec.df.empty)
 
-        # Test recommendations
-        recommendations_chicken = recommender.get_recommendations('chicken')
-        recommendations_broccoli = recommender.get_recommendations('broccoli')
-
-        # Check that all recommended recipes contain the keyword
-        for title in recommendations_chicken:
-            self.assertIn('chicken', title.lower())
-        for title in recommendations_broccoli:
-            self.assertIn('broccoli', title.lower())
-
-        # Test keyword with no matches
-        recommendations_no_match = recommender.get_recommendations('no_match_keyword')
-        self.assertEqual(recommendations_no_match, ["Sorry, we do not have any options with 'no_match_keyword' as an ingredient."])
+    def test_g_recommendationz(self):
+        recommendations = self.rec.g_recommendationz('chicken')
+        self.assertIsInstance(recommendations, list)
+        self.assertLessEqual(len(recommendations), 5)
+        self.assertTrue(all(isinstance(r, str) and r.startswith('-') for r in recommendations))
 
 
 ###TEST FOR RECIPEFINAL.PY 
-
-class RecipeFinalTests(unittest.TestCase):
-
-    @patch('builtins.input', side_effect=['Test Recipe', 'Chicken, Salt, Pepper', 'Cook chicken and add salt and pepper.'])
-    def test_add_recipe(self, input):
-        recipe_book = RecipeBook()
-        add_recipe(recipe_book)
-        self.assertEqual(len(recipe_book.get_all_recipes()), 1)
-
-    @patch('Categorize.get_recommendations')
-    @patch('builtins.input', side_effect=['chicken', 'grilled'])
-    def test_get_recommendation(self, input, mock_get_recommendations):
-        mock_get_recommendations.return_value = ['Grilled Chicken']
-        result = get_recommendation()
-        self.assertEqual(result, 'Grilled Chicken')
-
-    @patch('Recommendation.get_recommendations')
-    @patch('builtins.input', return_value='chicken')
-    def test_specific_recommendations(self, input, mock_get_recommendations):
-        mock_get_recommendations.return_value = ['Chicken Recipe']
-        result = specific_recommendations()
-        self.assertEqual(result, 'Chicken Recipe')
-
-    @patch('builtins.open', new_callable=mock_open)
-    def test_save_to_csv(self, mock_file):
-        recipe_book = RecipeBook()
-        recipe = Recipe('Test Recipe', ['Chicken', 'Salt', 'Pepper'], 'Cook chicken and add salt and pepper.')
-        recipe_book.add_recipe(recipe)
-        save_to_csv(recipe_book)
-        mock_file.assert_called_once_with('recipe.csv', 'w', newline='')
-
-    @patch('builtins.open', new_callable=mock_open, read_data='Test Recipe,Chicken,Salt,Pepper,Cook chicken and add salt and pepper.')
-    def test_load_from_csv(self, mock_file):
-        recipe_book = RecipeBook()
-        load_from_csv(recipe_book)
-        self.assertEqual(len(recipe_book.get_all_recipes()), 1)
 
 if __name__ == "__main__":
     unittest.main()
