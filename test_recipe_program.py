@@ -107,19 +107,21 @@ class TestCategorize(unittest.TestCase):
 
 ###TEST FOR RECOMMENDATION CLASS
 class TestRecommendation(unittest.TestCase):
-
+    """This class tests the Recommendation class."""
     def setUp(self):
+        """This sets up the unit test."""
         self.rec = Recommendation('recipe.csv')
 
     def test_df_not_empty(self):
+        """Tests if the dataframe is not empty"""
         self.assertFalse(self.rec.df.empty)
 
     def test_g_recommendationz(self):
+        """This tests the recommendation.py system"""
         recommendations = self.rec.g_recommendationz('chicken')
         self.assertIsInstance(recommendations, list)
         self.assertLessEqual(len(recommendations), 5)
         self.assertTrue(all(isinstance(r, str) and r.startswith('-') for r in recommendations))
-
 
 ###TEST FOR RECIPEFINAL.PY 
 
