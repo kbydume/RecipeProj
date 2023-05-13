@@ -140,7 +140,7 @@ def load_from_csv(recipe_book):
         recipe_book (RecipeBook): The recipe book to add the loaded recipes to.
     """
     try:
-        with open("recipe.csv", mode="r") as file:
+        with open("recipe.csv", mode="r",encoding='UTF-8') as file:
             reader = csv.reader(file)
             for row in reader:
                 title, ingredients, instructions = row
