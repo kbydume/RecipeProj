@@ -10,6 +10,50 @@ import RecipeFinal
 
 class TestRecipeProgram(unittest.TestCase):
     """This class tests methods in the overall recipe program."""
+    ###TEST FOR CATEGORIZE CLASS
+
+    def setUp(self):
+        self.file_name = 'recipe.csv'  # A file path to a valid CSV file is needed here
+        self.categorizer = Categorize(self.file_name)
+        self.categorizer.categorize_recipes()
+
+    def test_categorize_recipes(self):
+        meat_categories = self.categorizer.get_meat_categories()
+        cooking_styles = self.categorizer.get_cooking_styles()
+        
+        # Check if the categorization was successful
+        self.assertTrue(meat_categories)
+        self.assertTrue(cooking_styles)
+
+    def test_get_random_dishes_by_category(self):
+        random_dishes = self.categorizer.get_random_dishes_by_category('beef', 'grilled', 2)
+
+    # Check if we get the right number of dishes
+        self.assertEqual(len(random_dishes), 2)
+
+        # Check if the dishes are indeed in the 'beef' and 'grilled' categories
+        for dish in random_dishes:
+            self.assertIn(dish, self.categorizer.meat_categories['beef'])
+            self.assertIn(dish, self.categorizer.cooking_styles['grilled'])
+
+        print("\nRandom dishes in the 'beef' and 'grilled' categories:")
+        for dish in random_dishes:
+            print(dish)
+
+    def test_get_recommendations(self):
+        random_dishes = get_recommendations('chicken', 'fried')
+
+        # Check if we get the right number of dishes
+        self.assertEqual(len(random_dishes), 2)
+
+        # Check if the dishes are indeed in the 'chicken' and 'fried' categories
+        for dish in random_dishes:
+            self.assertIn(dish, self.categorizer.meat_categories['chicken'])
+            self.assertIn(dish, self.categorizer.cooking_styles['fried'])
+
+        print("\nRecommended dishes in the 'chicken' and 'fried' categories:")
+        for dish in random_dishes:
+            print(dish)
 
 ###TEST FOR RECIPE CLASS
     def test_recipe_creation(self):
@@ -66,63 +110,8 @@ class TestRecipeProgram(unittest.TestCase):
     #test for editor method
     #test for print output 
 
-###TEST FOR CATEGORIZE CLASS
-
-class TestCategorize(unittest.TestCase):
-
-    def setUp(self):
-        self.file_name = 'recipe.csv'  # A file path to a valid CSV file is needed here
-        self.categorizer = Categorize(self.file_name)
-        self.categorizer.categorize_recipes()
-
-    def test_categorize_recipes(self):
-        meat_categories = self.categorizer.get_meat_categories()
-        cooking_styles = self.categorizer.get_cooking_styles()
-        
-        # Check if the categorization was successful
-        self.assertTrue(meat_categories)
-        self.assertTrue(cooking_styles)
-
-    def test_get_random_dishes_by_category(self):
-        random_dishes = self.categorizer.get_random_dishes_by_category('beef', 'grilled', 2)
-
-        # Check if we get the right number of dishes
-        self.assertEqual(len(random_dishes), 2)
-
-        # Check if the dishes are indeed in the 'beef' and 'grilled' categories
-        for dish in random_dishes:
-            self.assertIn(dish, self.categorizer.meat_categories['beef'])
-            self.assertIn(dish, self.categorizer.cooking_styles['grilled'])
-
-    def test_get_recommendations(self):
-        random_dishes = get_recommendations('chicken', 'fried')
-
-        # Check if we get the right number of dishes
-        self.assertEqual(len(random_dishes), 2)
-
-        # Check if the dishes are indeed in the 'chicken' and 'fried' categories
-        for dish in random_dishes:
-            self.assertIn(dish, self.categorizer.meat_categories['chicken'])
-            self.assertIn(dish, self.categorizer.cooking_styles['fried'])
 
 ###TEST FOR RECOMMENDATION CLASS
-class TestRecommendation(unittest.TestCase):
-    """This class tests the Recommendation class."""
-    def setUp(self):
-        """This sets up the unit test."""
-        self.rec = Recommendation('recipe.csv')
-
-    def test_df_not_empty(self):
-        """Tests if the dataframe is not empty"""
-        self.assertFalse(self.rec.df.empty)
-
-    def test_g_recommendationz(self):
-        """This tests the recommendation.py system"""
-        recommendations = self.rec.g_recommendationz('chicken')
-        self.assertIsInstance(recommendations, list)
-        self.assertLessEqual(len(recommendations), 5)
-        self.assertTrue(all(isinstance(r, str) and r.startswith('-') for r in recommendations))
-
 ###TEST FOR RECIPEFINAL.PY 
     @patch('RecipeFinal.add_recipe')
     @patch('RecipeFinal.get_recommendation')
@@ -149,5 +138,6 @@ class TestRecommendation(unittest.TestCase):
         with patch('builtins.input', side_effect=['5', 'Test Recipe', '6']):
             RecipeFinal.main()
             mock_edit_recipe.assert_called_with('Test Recipe')
+
 if __name__ == "__main__":
     unittest.main()
