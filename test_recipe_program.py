@@ -6,7 +6,7 @@ from manage import Manager
 from unittest.mock import patch, mock_open
 from recommendation import Recommendation
 from Categorize import *
-from RecipeFinal import add_recipe, get_recommendation, specific_recommendations, save_to_csv, load_from_csv
+import RecipeFinal
 
 class TestRecipeProgram(unittest.TestCase):
     """This class tests methods in the overall recipe program."""
@@ -124,6 +124,30 @@ class TestRecommendation(unittest.TestCase):
         self.assertTrue(all(isinstance(r, str) and r.startswith('-') for r in recommendations))
 
 ###TEST FOR RECIPEFINAL.PY 
+    @patch('RecipeFinal.add_recipe')
+    @patch('RecipeFinal.get_recommendation')
+    @patch('RecipeFinal.specific_recommendations')
+    @patch('RecipeFinal.Manager.delete_recipe')
+    @patch('RecipeFinal.Manager.edit_recipe')
+    def test_main(self, mock_edit_recipe, mock_delete_recipe, mock_specific_recommendations, mock_get_recommendation, mock_add_recipe):
+        with patch('builtins.input', side_effect=['1', 'Test Recipe', 'Ingredient1,Ingredient2', 'Test Instructions', '6']):
+            RecipeFinal.main()
+            mock_add_recipe.assert_called()
 
+        with patch('builtins.input', side_effect=['2', '6']):
+            RecipeFinal.main()
+            mock_get_recommendation.assert_called()
+
+        with patch('builtins.input', side_effect=['3', 'Test Ingredient', '6']):
+            RecipeFinal.main()
+            mock_specific_recommendations.assert_called()
+
+        with patch('builtins.input', side_effect=['4', 'Test Recipe', '6']):
+            RecipeFinal.main()
+            mock_delete_recipe.assert_called_with('Test Recipe')
+
+        with patch('builtins.input', side_effect=['5', 'Test Recipe', '6']):
+            RecipeFinal.main()
+            mock_edit_recipe.assert_called_with('Test Recipe')
 if __name__ == "__main__":
     unittest.main()
