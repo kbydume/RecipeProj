@@ -134,6 +134,9 @@ class TestRecipeProgram(unittest.TestCase):
     @patch('RecipeFinal.Manager.delete_recipe')
     @patch('RecipeFinal.Manager.edit_recipe')
     def test_main(self, mock_edit_recipe, mock_delete_recipe, mock_specific_recommendations, mock_get_recommendation, mock_add_recipe):
+        """        
+        This function is mocking user's input tp ensure the RecipeFinal main() is calling the right function everytime
+        """
         with patch('builtins.input', side_effect=['1', 'Test Recipe', 'Ingredient1,Ingredient2', 'Test Instructions', '6']):
             RecipeFinal.main()
             mock_add_recipe.assert_called()
