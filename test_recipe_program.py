@@ -107,9 +107,6 @@ class TestRecipeProgram(unittest.TestCase):
         self.assertEqual(new_recipe.get_ingredients(), ["test", "eggs"])
         self.assertEqual(new_recipe.get_instructions(), "test instructions")
 
-    #test for editor method
-    #test for print output 
-
 
 ###TEST FOR RECOMMENDATION CLASS
     def test_get_recommendations(self):
