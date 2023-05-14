@@ -112,6 +112,21 @@ class TestRecipeProgram(unittest.TestCase):
 
 
 ###TEST FOR RECOMMENDATION CLASS
+    def test_get_recommendations(self):
+        """This test checks the recommendation of recipes based on a keyword,return the right length."""
+
+        # Initialize a recommendation object
+        recommender = Recommendation('recipe.csv')  # Assumed to exist and have appropriate format
+
+        # Test recommendations
+        recommendations_chicken = recommender.g_recommendationz('chicken')
+        recommendations_broccoli = recommender.g_recommendationz('broccoli')
+
+
+        # Test the length
+        self.assertEqual(len(recommendations_chicken),5)
+        self.assertEqual(len(recommendations_broccoli),5)
+
 ###TEST FOR RECIPEFINAL.PY 
     @patch('RecipeFinal.add_recipe')
     @patch('RecipeFinal.get_recommendation')
